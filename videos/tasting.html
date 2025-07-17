@@ -1,0 +1,616 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vinus Social Club</title><link href="favicon_final_blackbg.ico" rel="icon" type="image/x-icon"/>
+<style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #004225;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+    }
+
+    .logo {
+      height: 100px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .main-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px;
+      flex-wrap: wrap;
+    }
+
+    .left {
+      max-width: 500px;
+    }
+
+    .left h1 {
+  text-align: left;
+  font-size: 36px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  max-width: 600px;
+  word-break: break-word;
+}
+
+    .left p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .left button {
+  margin-bottom: 30px;
+      padding: 12px 24px;
+      background-color: #f1c40f;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .right img {
+      max-width: 400px;
+      border-radius: 10px;
+    }
+
+    .section-white {
+      background-color: white;
+      color: black;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      flex: 1;
+      margin: 10px;
+      min-width: 250px;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card:nth-child(1) { background-color: pink; }
+    .card:nth-child(2) { background-color: orange; }
+    .card:nth-child(3) { background-color: gold; }
+
+    @media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  nav a {
+    margin: 5px 10px;
+    font-size: 16px;
+  }
+
+  #langSelect {
+    margin-top: 10px;
+  }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .main-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .left {
+        max-width: 100%;
+      }
+
+      .right img {
+        max-width: 100%;
+        margin-top: 20px;
+      }
+
+      .left button {
+  margin-bottom: 30px;
+        margin-top: 20px;
+      }
+
+      .section-white {
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        border-radius: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  
+
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #004225;
+      color: white;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+    }
+    nav a {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .main-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px;
+      flex-wrap: wrap;
+    }
+    .left {
+      max-width: 500px;
+    }
+    .left h1 {
+  text-align: left;
+  font-size: 36px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  max-width: 600px;
+  word-break: break-word;
+}
+    .left p {
+  text-align: left;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .left button {
+  margin-bottom: 30px;
+  margin-left: 200px;
+  margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #f1c40f;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .right img {
+      max-width: 260px; margin: 0 auto; display: block; transform: translateX(-40px);
+      border-radius: 10px;
+    }
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px;
+      background-color: #f8f8f8;
+      color: black;
+    }
+    .card {
+      width: 250px;
+      text-align: center;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .card:nth-child(1) { background-color: #f78da7; }
+    .card:nth-child(2) { background-color: #f39c12; }
+    .card:nth-child(3) { background-color: #f1c40f; }
+    .card i {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .logo {
+      height: 150px;
+      width: auto;
+    }
+  
+.left button {
+  margin-bottom: 30px;
+  margin-left: 200px;
+  margin-top: 20px;
+  display: block;
+  margin-left: 0;
+}
+
+.text-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding-left: 20px;
+}
+.text-button-wrapper button {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  nav a {
+    margin: 5px 10px;
+    font-size: 16px;
+  }
+
+  #langSelect {
+    margin-top: 10px;
+  }
+
+  .container {
+    flex-direction: column;
+    padding: 20px;
+    gap: 40px;
+  }
+
+  .left, .right {
+    width: 100%;
+    text-align: center;
+  }
+
+  .text-button-wrapper {
+    align-items: center;
+    padding-left: 0;
+  }
+
+  .left h1 {
+  text-align: left;
+  font-size: 36px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  max-width: 600px;
+  word-break: break-word;
+}
+
+  .left p {
+    font-size: 16px;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .left button {
+  margin-bottom: 30px;
+    font-size: 16px;
+    padding: 12px 24px;
+  }
+
+  .right img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    gap: 40px;
+    padding: 30px;
+  }
+
+  .left, .right {
+    width: 100%;
+    text-align: center;
+  }
+
+  .text-button-wrapper {
+    align-items: center;
+    padding-left: 0;
+  }
+
+  .left h1 {
+  text-align: left;
+  font-size: 36px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  max-width: 600px;
+  word-break: break-word;
+}
+
+  .left p {
+    font-size: 18px;
+    max-width: 95%;
+    margin: 0 auto;
+  }
+
+  .left button {
+  margin-bottom: 30px;
+    font-size: 18px;
+    padding: 14px 28px;
+  }
+
+  .right img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+
+.section-white {
+  background-color: white;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  color: black;
+}
+
+.section-white .card {
+  flex: 1;
+  margin: 10px;
+  min-width: 250px;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+}
+
+.section-white .card:nth-child(1) { background-color: pink; }
+.section-white .card:nth-child(2) { background-color: orange; }
+.section-white .card:nth-child(3) { background-color: gold; }
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  nav a {
+    margin: 5px 10px;
+    font-size: 16px;
+  }
+
+  #langSelect {
+    margin-top: 10px;
+  }
+
+  .section-white {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 0;
+  }
+}
+
+@media (min-width: 769px) {
+  header {
+    flex-wrap: nowrap;
+  }
+
+  nav {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    white-space: nowrap;
+  }
+}
+
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  nav a {
+    margin: 5px 10px;
+    font-size: 16px;
+  }
+
+  #langSelect {
+    margin-top: 10px;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  nav a {
+    margin: 5px 10px;
+    font-size: 16px;
+  }
+
+  .left button {
+    margin-bottom: 80px;
+  }
+
+  .right img {
+    margin-top: 20px;
+  }
+}
+
+  html { overflow-y: scroll; }
+
+.embed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  justify-items: center;
+  padding: 0 40px;
+}
+
+</style>
+</head>
+<body>
+<header>
+<img alt="Logo" class="logo" src="/WineLovers/logo_transparent.png" style="height: 150px; width: auto;" />
+  <nav>
+    <a href="/WineLovers/index.html"><span data-i18n="header_home">Home</span></a>
+    <a href="/WineLovers/shop/"><span data-i18n="header_shop">Shop</span></a>
+    <a href="/WineLovers/videos/"><span data-i18n="header_videos">Videos</span></a>
+    <a href="/WineLovers/articles/"><span data-i18n="header_articles">Articles</span></a>
+  </nav>
+  <select id="langSelect" style="margin-left: 20px; padding: 5px;">
+    <option value="en">🇬🇧 EN</option>
+    <option value="pt">🇵🇹 PT</option>
+    <option value="fr">🇫🇷 FR</option>
+    <option value="de">🇩🇪 DE</option>
+  </select>
+</header>
+<main>
+  <h1 data-i18n="video_wine_tasting" style="text-align:center;">Wine Tasting</h1>
+  <p data-i18n="tasting_description" style="text-align:center; margin-bottom: 20px;">
+    🍷 Learn and enjoy the art of wine tasting with our exclusive videos.</p>
+<div class="embed-grid">
+<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/C7ASfgaolO8/" data-instgrm-version="14" style="margin: 20px auto; max-width:540px; min-width:326px; width:99.375%;">
+<a href="https://www.instagram.com/reel/C7ASfgaolO8/" rel="noopener" target="_blank">Ver no Instagram</a>
+</blockquote>
+<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/C7mQafOI71A/" data-instgrm-version="14" style="margin: 20px auto; max-width:540px; min-width:326px; width:99.375%;">
+<a href="https://www.instagram.com/reel/C7mQafOI71A/" rel="noopener" target="_blank">Ver no Instagram</a>
+</blockquote>
+<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/C6UNAwXND6T/" data-instgrm-version="14" style="margin: 20px auto; max-width:540px; min-width:326px; width:99.375%;">
+<a href="https://www.instagram.com/reel/C6UNAwXND6T/" rel="noopener" target="_blank">Ver no Instagram</a>
+</blockquote>
+<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/C36DWRnoZrZ/" data-instgrm-version="14" style="margin: 20px auto; max-width:540px; min-width:326px; width:99.375%;">
+<a href="https://www.instagram.com/reel/C36DWRnoZrZ/" rel="noopener" target="_blank">Ver no Instagram</a>
+</blockquote>
+</div>
+<a class="watch-button" data-i18n="go_back" href="/WineLovers/videos/"
+     style="display:block; margin: 40px auto 60px; text-align:center; width:max-content; padding:12px 30px; background:white; color:#004225; font-weight:bold; border-radius:8px; text-decoration:none; font-size:16px;">
+     GO BACK
+  </a>
+</main>
+<style>
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+.video-card {
+  height: 420px;
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+}
+.video-card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+.video-card h2,
+.video-card .button {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: white;
+  text-align: center;
+}
+.video-card h2 {
+  top: 25%;
+  font-size: 20px;
+  margin: 0;
+}
+.video-card .button {
+  top: 60%;
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.video-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1;
+}
+.embed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  justify-items: center;
+  padding: 0 40px;
+}
+
+</style>
+<script async="" src="//www.instagram.com/embed.js"></script><script src="/WineLovers/script.js"></script></body>
+</html>
