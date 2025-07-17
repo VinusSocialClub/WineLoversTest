@@ -3,9 +3,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-const User = require('./models/User');
-const Cart = require('./models/Cart');
-const Order = require('./models/Order');
+const User = require('./models/user');
+const Cart = require('./models/cart');
+const Order = require('./models/order');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
