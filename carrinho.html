@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Carrinho</title>
+</head>
+<body>
+  <h1>O teu Carrinho</h1>
+  <ul id="cartItems"></ul>
+  <button id="checkoutBtn">Finalizar Compra</button>
+
+  <script>
+    async function loadCart() {
+      const res = await fetch('http://localhost:3000/cart');
+      if(res.ok) {
+        const cart = await res.json();
+        const list = document.getElementById('cartItems');
+        list.innerHTML = '';
+        cart.items.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = `${item.name} - ${item.quantity} unidades`;
+          list.appendChild(li);
+        });
+      }
+    }
+
+    document.getElementById('checkoutBtn').addEventListener('click', () => {
+      window.location.href = 'checkout.html';
+    });
+
+    loadCart();
+  </script>
+</body>
+</html>
