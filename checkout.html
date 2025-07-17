@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout</title>
+</head>
+<body>
+  <h1>Finalizar Compra</h1>
+  <form id="checkoutForm">
+    <label>Nome: <input type="text" id="name" required /></label><br />
+    <label>Endereço: <input type="text" id="address" required /></label><br />
+    <button type="submit">Comprar</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('checkoutForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const address = document.getElementById('address').value;
+
+      const res = await fetch('http://localhost:3000/checkout', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name, address })
+      });
+
+      if(res.ok) {
+        alert('Compra finalizada com sucesso!');
+      } else {
+        alert('Erro no checkout');
+      }
+    });
+  </script>
+</body>
+</html>
