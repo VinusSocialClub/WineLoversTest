@@ -499,6 +499,8 @@
     margin-top: 20px;
   }
 }
+
+  html { overflow-y: scroll; }
    .footer {
   background-color: #004225;
   color: white;
@@ -507,7 +509,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
-  margin-top: 60px;
+  margin-top: 10px;
   font-size: 14px;
   text-align: center;
 }
@@ -559,109 +561,46 @@
      text-align: center;
      justify-content: center;
 }
-  html { overflow-y: scroll; }
 </style>
 </head>
 <body>
 <header>
 <img alt="Logo" class="logo" src="logo_transparent.png" style="height: 150px; width: auto;"/>
 <nav>
-<a href="/WineLoversTest/index.html"><span data-i18n="header_home">Home</span></a>
-<a href="/WineLoversTest/shop/"><span data-i18n="header_shop">Shop</span></a>
-<a href="/WineLoversTest/videos/"><span data-i18n="header_videos">Videos</span></a>
-<a href="/WineLoversTest/articles/"><span data-i18n="header_articles">Articles</span></a>
+<a href="./index.html"><span data-i18n="header_home">Home</span></a>
+<a href="./shop/"><span data-i18n="header_shop">Shop</span></a>
+<a href="./videos/"><span data-i18n="header_videos">Videos</span></a>
+<a href="./articles/"><span data-i18n="header_articles">Articles</span></a>
 </nav>
 <select id="langSelect" style="margin-left: 20px; padding: 5px;"><option value="en">🇬🇧 EN</option><option value="pt">🇵🇹 PT</option><option value="fr">🇫🇷 FR</option><option value="de">🇩🇪 DE</option></select>
 </header>
-
-<div class="main" style="text-align: center; padding: 30px 20px 80px 20px;">
-  <h1 data-i18n="videos_title" style="font-size: 36px; margin-bottom: 20px;">Video Section</h1>
-  <p data-i18n="videos_description" style="font-size: 18px;">Choose a theme to explore our video content</p>
-   <div style="text-align: center; margin-bottom: 50px;">
+<section class="main-section">
+<div class="left">
+<h1><span data-i18n="hero_title">WINE ENTHUSIASTS, REJOICE!</span></h1>
+<p><em><span data-i18n="hero_subtitle">Uncork the joys of wine and the vine with Vinus Social Club</span></em></p>
+<a href="./shop/"><button><span data-i18n="shop_button">SHOP NOW</span></button></a>
 </div>
-  <div class="video-grid">
-    <div class="video-card">
-      <img alt="Vinus Partys" src="../images/party.jpg" />
-      <h2 data-i18n="video_vinus_partys">Vinus Partys</h2>
-      <a class="button" data-i18n="watch_button" href="partys.html">WATCH</a>
-    </div>
-    <div class="video-card">
-      <img alt="Wine Education" src="../images/education.jpg" />
-      <h2 data-i18n="video_wine_education">Wine Education</h2>
-      <a class="button" data-i18n="watch_button" href="education.html">WATCH</a>
-    </div>
-    <div class="video-card">
-      <img alt="Wine Tourism" src="../images/tourism.jpg" />
-      <h2 data-i18n="video_wine_tourism">Wine Tourism</h2>
-      <a class="button" data-i18n="watch_button" href="tourism.html">WATCH</a>
-    </div>
-    <div class="video-card">
-      <img alt="Wine Tasting" src="../images/tasting.jpg" />
-      <h2 data-i18n="video_wine_tasting">Wine Tasting</h2>
-      <a class="button" data-i18n="watch_button" href="tasting.html">WATCH</a>
-    </div>
-  </div>
- <div style="text-align: center; margin-bottom: 50px;">
-  <button
-  id="backHomeBtn"
-  data-i18n="back_home"
-  onclick="window.location.href='/WineLoversTest/index.html'"
-  style="margin-top: 40px; padding: 12px 24px; background-color: #f1c40f; color: black; font-weight: bold; border: none; border-radius: 4px; cursor: pointer;">
-  HOMEPAGE
-</button>
+<div class="right">
+<img alt="Woman with wine" src="imagem_mulher.jpg" style="max-width: 260px; margin: 0 auto; display: block; transform: translate(-40px, -60px); border-radius: 10px;"/>
 </div>
-<style>
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
-}
-.video-card {
-  height: 420px;
-  position: relative;
-  padding: 0;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.3);
-}
-.video-card img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
-}
-.video-card h2,
-.video-card .button {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  color: white;
-  text-align: center;
-}
-.video-card h2 {
-  top: 25%;
-  font-size: 20px;
-  margin: 0;
-}
-.video-card .button {
-  top: 60%;
-  background: transparent;
-  border: 2px solid white;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-weight: bold;
-  text-decoration: none;
-}
-.video-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
-  z-index: 1;
-}</style>
+</section>
+<section class="section-white">
+<div class="card"><a href="./shop/" style="text-decoration:none; color:inherit; display:inline-block; width:100%; height:100%;">
+<i>🛒</i>
+<h3><span data-i18n="card1_title">SHOP WINE</span></h3>
+<p><span data-i18n="card1_text">Explore our curated selection of fine wines.</span></p>
+</a></div>
+<div class="card"><a href="./videos/" style="text-decoration:none; color:inherit; display:inline-block; width:100%; height:100%;">
+<i>▶️</i>
+<h3><span data-i18n="card2_title">WATCH VIDEOS</span></h3>
+<p><span data-i18n="card2_text">Sip, swirl, and smile with our fun, informative wine videos.</span></p>
+</a></div>
+<div class="card"><a href="./articles/" style="text-decoration:none; color:inherit; display:inline-block; width:100%; height:100%;">
+<i>📄</i>
+<h3><span data-i18n="card3_title">READ ARTICLES</span></h3>
+<p><span data-i18n="card3_text">Get the latest grape on all things wine with our articles.</span></p>
+</a></div>
+</section>
    <footer class="footer">
   <div class="footer-left">
     <p data-i18n="footer_rights"><strong>©2025 Vinus Social Club,<br/>All rights reserved.</strong></p>
@@ -687,6 +626,5 @@
     <img src="https://cdn-icons-png.flaticon.com/24/1384/1384014.png" alt="LinkedIn" width="24" height="24"/></a>
 </div>
 </footer>
-<script src="../script.js"></script>
-</body>
+<script src="script.js"></script></body>
 </html>
