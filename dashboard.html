@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+</head>
+<body>
+  <h1>Bem-vindo, <span id="username"></span>!</h1>
+  <p>Email: <span id="email"></span></p>
+
+  <button onclick="logout()">Logout</button>
+
+  <script>
+    document.getElementById('username').textContent = localStorage.getItem('username');
+    document.getElementById('email').textContent = localStorage.getItem('email');
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>
