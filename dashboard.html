@@ -6,7 +6,6 @@
 <title>Dashboard - Vinus Social Club</title>
 <link href="favicon_final_blackbg.ico" rel="icon" type="image/x-icon" />
 <style>
-  /* Reset */
   * {
     box-sizing: border-box;
   }
@@ -78,7 +77,6 @@
     background-color: #d4ac0d;
   }
 
-  /* Container for user info + cart + logout */
   .user-controls {
     display: flex;
     align-items: center;
@@ -116,12 +114,11 @@
       <button id="logoutBtn" style="display:none;">Logout</button>
     </div>
 
-    <!-- Conteúdo do dashboard aqui -->
     <p>Aqui podes gerir a tua conta, ver encomendas, etc.</p>
+    <p style="margin-top: 40px; font-size: 0.9rem; opacity: 0.7;">Serás redirecionado para a página inicial em 7 segundos...</p>
   </main>
 
   <script>
-    // Lê o username do localStorage
     const username = localStorage.getItem('username');
     const usernameDisplay = document.getElementById('usernameDisplay');
     const logoutBtn = document.getElementById('logoutBtn');
@@ -140,4 +137,18 @@
       });
 
       cartIcon.addEventListener('click', () => {
-        window.
+        window.location.href = 'cart.html'; // Ajusta conforme o caminho do carrinho
+      });
+
+      // Redirecionar para página inicial após 7 segundos
+      setTimeout(() => {
+        window.location.href = 'index.html'; // Ajusta para a página inicial real
+      }, 7000);
+
+    } else {
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>
+
