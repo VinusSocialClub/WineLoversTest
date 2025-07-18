@@ -1,54 +1,96 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Vinus Social Club</title>
+  <style>
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      background-color: #2c7a4b; /* verde escuro */
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+    .logo {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 120px; /* ajusta o tamanho do logo */
+      user-select: none;
+    }
+    .container {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+    form {
+      background: rgba(255,255,255,0.1);
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 360px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0 20px 0;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #1f5c34;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      font-size: 1rem;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #144421;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+  </style>
 </head>
 <body>
-  <h1>Login</h1>
-  <form id="loginForm">
-    <label>Email: <input type="email" id="email" required></label><br>
-    <label>Password: <input type="password" id="password" required></label><br>
-    <button type="submit">Entrar</button>
-    <p>Não tens conta? <a href="register.html">Cria aqui</a></p>
-  </form>
+  <img src="logo.png" alt="Vinus Social Club Logo" class="logo" />
+
+  <div class="container">
+    <form id="loginForm">
+      <h1>Login</h1>
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
 
   <script>
-    const form = document.getElementById('loginForm');
-    form.addEventListener('submit', async (e) => {
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const email = document.getElementById('email').value;
+      const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
 
-      try {
-        const res = await fetch('https://wineloverstest.onrender.com/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-
-        if(res.ok) {
-          const data = await res.json();
-
-          // Guarda o username que o backend devolve
-          localStorage.setItem('username', data.username);
-          localStorage.setItem('email', email);
-
-          alert(`${data.message} Bem-vindo ${data.username}!`);
-
-          // Redireciona para dashboard (ou muda para onde quiseres)
-          window.location.href = 'dashboard.html';
-        } else {
-          const error = await res.json();
-          alert(error.message);
-        }
-      } catch (error) {
-        alert('Erro ao conectar ao servidor.');
-        console.error(error);
+      // Simples validação, aqui normalmente vais fazer fetch para o backend
+      if (username && password) {
+        localStorage.setItem('username', username);
+        window.location.href = 'dashboard.html';
+      } else {
+        alert('Por favor, preencha todos os campos.');
       }
     });
   </script>
 </body>
 </html>
+
 
