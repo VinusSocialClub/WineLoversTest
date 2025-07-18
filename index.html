@@ -578,14 +578,14 @@
     <option value="fr">🇫🇷 FR</option>
     <option value="de">🇩🇪 DE</option>
   </select>
-
   <!-- Aqui adiciona esta div para o botão/login -->
-  <div id="loginArea" style="position: absolute; top: 20px; right: 20px;">
-    <button id="loginBtn">Login</button>
-<span id="usernameDisplay" style="display:none; font-weight:bold; margin-left:10px;"></span>
-<button id="logoutBtn" style="display:none; margin-left:10px;">Logout</button>
-   <div id="cartIcon" style="display:none;">
-  🛒 Carrinho
+ <div id="loginArea" style="position: absolute; top: 20px; right: 20px; display: flex; align-items: center; gap: 10px;">
+  <button id="loginBtn">Login</button>
+  <span id="usernameDisplay" style="display:none; font-weight: bold;"></span>
+  <button id="logoutBtn" style="display:none;">Logout</button>
+  <div id="cartIcon" style="display:none; cursor: pointer; font-weight: bold;">
+    🛒 Carrinho
+  </div>
 </div>
 </header>
 <section class="main-section">
