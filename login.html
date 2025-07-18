@@ -16,9 +16,12 @@
     }
     header {
       padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Mantém o logotipo à esquerda */
     }
     header img {
-      height: 150px; /* Mesmo tamanho do index.html */
+      height: 150px; /* Mesmo tamanho da página inicial */
       width: auto;
     }
     main {
@@ -77,6 +80,7 @@
 
  <header>
    <img src="logo_transparent.png" alt="Logotipo Vinus Social Club">
+   <div></div> <!-- Isto faz com que o justify-content funcione sem meter o carrinho -->
  </header>
 
  <main>
@@ -104,9 +108,6 @@
      }
    });
  </script>
-
-</body>
-</html>
 
 </body>
 </html>
