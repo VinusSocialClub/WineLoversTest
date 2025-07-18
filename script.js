@@ -185,9 +185,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Login button / username display logic
+  // Login / Username / Logout logic
   const loginBtn = document.getElementById('loginBtn');
   const usernameDisplay = document.getElementById('usernameDisplay');
+  const logoutBtn = document.getElementById('logoutBtn');
   const username = localStorage.getItem('username'); // assume username stored here
 
   if (username) {
@@ -196,14 +197,22 @@ document.addEventListener("DOMContentLoaded", () => {
       usernameDisplay.textContent = username;
       usernameDisplay.style.display = 'inline';
     }
+    if (logoutBtn) {
+      logoutBtn.style.display = 'inline-block';
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('username');
+        location.reload();
+      });
+    }
   } else {
-    if (loginBtn) loginBtn.style.display = 'inline-block';
-    if (usernameDisplay) usernameDisplay.style.display = 'none';
-
     if (loginBtn) {
+      loginBtn.style.display = 'inline-block';
       loginBtn.addEventListener('click', () => {
         window.location.href = 'login.html';
       });
     }
+    if (usernameDisplay) usernameDisplay.style.display = 'none';
+    if (logoutBtn) logoutBtn.style.display = 'none';
   }
 });
+
