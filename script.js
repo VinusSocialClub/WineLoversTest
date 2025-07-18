@@ -174,6 +174,7 @@ document.getElementById("langSelect").addEventListener("change", function () {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Idioma salvo
   const savedLang = localStorage.getItem("preferredLanguage") || "en";
   const langSelect = document.getElementById("langSelect");
   if (langSelect) langSelect.value = savedLang;
@@ -185,11 +186,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Login / Username / Logout logic
+  // Login / Username / Logout / Carrinho
   const loginBtn = document.getElementById('loginBtn');
   const usernameDisplay = document.getElementById('usernameDisplay');
   const logoutBtn = document.getElementById('logoutBtn');
-  const username = localStorage.getItem('username'); // assume username stored here
+  const cartIcon = document.getElementById('cartIcon');
+  const username = localStorage.getItem('username'); // variável usada aqui
 
   if (username) {
     if (loginBtn) loginBtn.style.display = 'none';
@@ -204,6 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
         location.reload();
       });
     }
+    if (cartIcon) cartIcon.style.display = 'inline-block';
   } else {
     if (loginBtn) {
       loginBtn.style.display = 'inline-block';
@@ -213,24 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (usernameDisplay) usernameDisplay.style.display = 'none';
     if (logoutBtn) logoutBtn.style.display = 'none';
-  }
-});
-document.addEventListener("DOMContentLoaded", () => {
-  // ... código existente ...
-
-  // Elemento do carrinho
-  const cartIcon = document.getElementById('cartIcon');
-
-  if (username) {
-    // Mostrar carrinho
-    if (cartIcon) cartIcon.style.display = 'inline-block';
-
-    // ... resto da lógica login/logout ...
-  } else {
-    // Esconder carrinho se não estiver logado
     if (cartIcon) cartIcon.style.display = 'none';
-
-    // ... resto da lógica login/logout ...
   }
 });
 
