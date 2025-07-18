@@ -14,40 +14,39 @@
   </form>
 
   <script>
-  const form = document.getElementById('loginForm');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    const form = document.getElementById('loginForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-    const res = await fetch('https://wineloverstest.onrender.com/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      try {
+        const res = await fetch('https://wineloverstest.onrender.com/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        if(res.ok) {
+          const data = await res.json();
+          alert(`${data.message} Bem-vindo ${data.username}!`);
+
+          // Guardar username e email no localStorage para usar depois
+          localStorage.setItem('username', data.username);
+          localStorage.setItem('email', email);
+
+          // Redirecionar para o dashboard ou site principal
+          window.location.href = 'https://vinussocialclub.github.io/WineLoversTest';
+        } else {
+          const error = await res.json();
+          alert(error.message);
+        }
+      } catch (error) {
+        alert('Erro ao conectar ao servidor.');
+        console.error(error);
+      }
     });
-
-   if(res.ok) {
-  const data = await res.json();
-  alert(data.message + " Bem-vindo " + data.username + "!");
-  // Redirecionar para o site principal
-  window.location.href = 'https://vinussocialclub.github.io/WineLoversTest';
-} else {
-  const error = await res.json();
-  alert(error.message);
-}
-      // Guardar username e email no localStorage para usar depois
-      localStorage.setItem('username', data.username);
-      localStorage.setItem('email', email);
-
-      // Redirecionar para o dashboard
-      window.location.href = 'dashboard.html';
-    } else {
-      const error = await res.json();
-      alert(error.message);
-    }
-  });
-</script>
+  </script>
 </body>
 </html>
-
