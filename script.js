@@ -161,36 +161,49 @@ const translations = {
   }
 };
 
-const langSelect = document.getElementById("langSelect");
-
-if (langSelect) {
-  langSelect.addEventListener("change", function () {
-    const lang = this.value;
-    localStorage.setItem("preferredLanguage", lang);
-
-    document.querySelectorAll("[data-i18n]").forEach(el => {
-      const key = el.getAttribute("data-i18n");
-      el.textContent = (translations[lang] && translations[lang][key]) || el.textContent;
-    });
-  });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const savedLang = localStorage.getItem("preferredLanguage") || "en";
-
-  if (langSelect) {
-    langSelect.value = savedLang;
-  }
+document.getElementById("langSelect").addEventListener("change", function () {
+  const lang = this.value;
+  localStorage.setItem("preferredLanguage", lang);
 
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
-    el.textContent = (translations[savedLang] && translations[savedLang][key]) || el.textContent;
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const savedLang = localStorage.getItem("preferredLanguage") || "en";
+  const langSelect = document.getElementById("langSelect");
+  if (langSelect) langSelect.value = savedLang;
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (translations[savedLang] && translations[savedLang][key]) {
+      el.textContent = translations[savedLang][key];
+    }
   });
 
+  // Login button / username display logic
   const loginBtn = document.getElementById('loginBtn');
-  if (loginBtn) {
-    loginBtn.addEventListener('click', () => {
-      window.location.href = 'login.html';
-    });
+  const usernameDisplay = document.getElementById('usernameDisplay');
+  const username = localStorage.getItem('username'); // assume username stored here
+
+  if (username) {
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (usernameDisplay) {
+      usernameDisplay.textContent = username;
+      usernameDisplay.style.display = 'inline';
+    }
+  } else {
+    if (loginBtn) loginBtn.style.display = 'inline-block';
+    if (usernameDisplay) usernameDisplay.style.display = 'none';
+
+    if (loginBtn) {
+      loginBtn.addEventListener('click', () => {
+        window.location.href = 'login.html';
+      });
+    }
   }
 });
