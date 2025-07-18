@@ -560,6 +560,66 @@
      text-align: center;
      justify-content: center;
 }
+   /* Centralizar a caixa login no main */
+main {
+  height: calc(100vh - 180px); /* altura da viewport menos header */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Caixa do login */
+.login-box {
+  background-color: #3a7a56;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  width: 320px;  /* largura fixa para manter padrão */
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Inputs e botão com largura igual */
+.login-box input[type="text"],
+.login-box input[type="password"],
+.login-box button {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0 16px 0;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* Botão */
+.login-box button {
+  background-color: #1f4e2e;
+  color: white;
+  cursor: pointer;
+}
+
+.login-box button:hover {
+  background-color: #163a20;
+}
+
+/* Texto do link de registro */
+.register-text {
+  color: white;
+  font-size: 14px;
+}
+
+.register-text a {
+  color: #f1c40f;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
+}
+
 </style>
 </head>
 <body>
