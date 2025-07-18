@@ -5,19 +5,18 @@
   <title>Dashboard</title>
 </head>
 <body>
-  <h1>Bem-vindo, <span id="username"></span>!</h1>
-  <p>Email: <span id="email"></span></p>
-
-  <button onclick="logout()">Logout</button>
+  <h1>Bem-vindo!</h1>
+  <p id="welcomeMessage"></p>
+  <p>Vai ser redirecionado para a página inicial em alguns segundos...</p>
 
   <script>
-    document.getElementById('username').textContent = localStorage.getItem('username');
-    document.getElementById('email').textContent = localStorage.getItem('email');
+    const username = localStorage.getItem('username') || 'Utilizador';
+    document.getElementById('welcomeMessage').textContent = `Olá, ${username}! Bem-vindo ao dashboard.`;
 
-    function logout() {
-      localStorage.clear();
-      window.location.href = 'login.html';
-    }
+    // Redirecionar automaticamente após 7 segundos (7000 ms)
+    setTimeout(() => {
+      window.location.href = 'https://vinussocialclub.github.io/WineLoversTest';
+    }, 7000);
   </script>
 </body>
 </html>
