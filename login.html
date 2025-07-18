@@ -27,10 +27,15 @@
       body: JSON.stringify({ email, password })
     });
 
-    if(res.ok) {
-      const data = await res.json();
-      alert(data.message + " Bem-vindo " + data.username + "!");
-
+   if(res.ok) {
+  const data = await res.json();
+  alert(data.message + " Bem-vindo " + data.username + "!");
+  // Redirecionar para o site principal
+  window.location.href = 'https://vinussocialclub.github.io/WineLoversTest';
+} else {
+  const error = await res.json();
+  alert(error.message);
+}
       // Guardar username e email no localStorage para usar depois
       localStorage.setItem('username', data.username);
       localStorage.setItem('email', email);
