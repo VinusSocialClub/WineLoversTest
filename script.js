@@ -215,4 +215,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (logoutBtn) logoutBtn.style.display = 'none';
   }
 });
+document.addEventListener("DOMContentLoaded", () => {
+  // ... código existente ...
+
+  // Elemento do carrinho
+  const cartIcon = document.getElementById('cartIcon');
+
+  if (username) {
+    // Mostrar carrinho
+    if (cartIcon) cartIcon.style.display = 'inline-block';
+
+    // ... resto da lógica login/logout ...
+  } else {
+    // Esconder carrinho se não estiver logado
+    if (cartIcon) cartIcon.style.display = 'none';
+
+    // ... resto da lógica login/logout ...
+  }
+});
 
