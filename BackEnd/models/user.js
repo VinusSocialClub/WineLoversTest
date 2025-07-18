@@ -3,7 +3,7 @@ const { Schema, model } = mongoose;
 
 const UserSchema = new Schema({
   username: { type: String, required: true, unique: true }, // Nome visível no site
-  email: { type: String, required: true, unique: true },    // Para login
+  email: { type: String, required: true, unique: true, lowercase: true }    // Para login
   password: { type: String, required: true }
 });
 
