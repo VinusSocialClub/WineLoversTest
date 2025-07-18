@@ -8,20 +8,17 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: Arial, sans-serif;
-      background-color: #004225; /* verde igual ao index */
+      background-color: #004225;
       color: white;
       height: 100vh;
       display: flex;
       flex-direction: column;
     }
     header {
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      padding: 20px 40px;
     }
     header img {
-      height: 100px; /* igual ao index */
+      height: 150px; /* Mesmo tamanho do index.html */
       width: auto;
     }
     main {
@@ -99,7 +96,6 @@
      const username = document.getElementById('username').value.trim();
      const password = document.getElementById('password').value.trim();
 
-     // Simples lógica de demo, substitui pela tua:
      if (username && password) {
        localStorage.setItem('username', username);
        window.location.href = 'dashboard.html';
@@ -108,6 +104,9 @@
      }
    });
  </script>
+
+</body>
+</html>
 
 </body>
 </html>
