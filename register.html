@@ -1,42 +1,128 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Registo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registo – Vinus Social Club</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #004225;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Mantém o logotipo à esquerda */
+    }
+    header img {
+      height: 150px;
+      width: auto;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .register-box {
+      background-color: white;
+      color: #004225;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      width: 320px;
+      text-align: center;
+    }
+    .register-box h2 {
+      margin-bottom: 20px;
+      color: #004225;
+    }
+    .register-box input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .register-box button {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      background-color: #f1c40f;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .register-box button:hover {
+      background-color: #e0b90f;
+    }
+    .register-box .login-text {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .register-box .login-text a {
+      color: #004225;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <h1>Registo</h1>
-  <form id="registerForm">
-    <label>Username: <input type="text" id="username" required></label><br>
-    <label>Email: <input type="email" id="email" required></label><br>
-    <label>Password: <input type="password" id="password" required></label><br>
-    <button type="submit">Registar</button>
-  </form>
 
-  <script>
-    const form = document.getElementById('registerForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+<header>
+  <img src="logo_transparent.png" alt="Logotipo Vinus Social Club" />
+  <div></div>
+</header>
 
-      const username = document.getElementById('username').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+<main>
+  <div class="register-box">
+    <h2>Registo</h2>
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <input type="password" id="confirmPassword" placeholder="Confirmar Password" required />
+    <button id="registerBtn">Registar</button>
+    <div class="login-text">
+      Já tens conta? <a href="login.html">Entra aqui!</a>
+    </div>
+  </div>
+</main>
 
-      const res = await fetch('https://wineloverstest.onrender.com/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password })
-      });
+<script>
+  document.getElementById('registerBtn').addEventListener('click', () => {
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const confirmPassword = document.getElementById('confirmPassword').value.trim();
 
-      if(res.ok) {
-        const data = await res.json();
-        alert(data.message);
-        window.location.href = 'login.html';
-      } else {
-        const error = await res.json();
-        alert(error.message);
-      }
-    });
-  </script>
+    if (!username || !email || !password || !confirmPassword) {
+      alert('Por favor, preenche todos os campos.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert('As passwords não coincidem.');
+      return;
+    }
+
+    // Aqui podes adicionar validação extra, ou enviar para o backend
+
+    // Por agora, guarda o username e email localmente e redireciona para login
+    localStorage.setItem('username', username);
+    localStorage.setItem('email', email);
+    alert('Registo efetuado com sucesso! Agora podes entrar.');
+    window.location.href = 'login.html';
+  });
+</script>
+
 </body>
 </html>
