@@ -22,6 +22,7 @@
     display: flex;
     align-items: center;
     padding: 20px 40px;
+    background-color: #004225;
   }
 
   .logo {
@@ -34,7 +35,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 140px); /* desconta header + padding */
+    height: calc(100vh - 140px); /* header + padding */
     padding: 20px;
     text-align: center;
   }
@@ -47,13 +48,6 @@
   .welcome {
     font-size: 1.25rem;
     margin-bottom: 30px;
-  }
-
-  #cartIcon {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 30px;
-    cursor: pointer;
   }
 
   #usernameDisplay {
@@ -84,6 +78,12 @@
     margin-bottom: 40px;
   }
 
+  #cartIcon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+
   @media (max-width: 600px) {
     main {
       padding: 10px;
@@ -110,12 +110,14 @@
 
     <div class="user-controls">
       <div id="usernameDisplay"></div>
-      <img id="cartIcon" src="cart_icon.png" alt="Carrinho" title="Carrinho" style="display:none;" />
-      <button id="logoutBtn" style="display:none;">Logout</button>
+      <img id="cartIcon" src="cart_icon.png" alt="Carrinho" title="Carrinho" />
+      <button id="logoutBtn">Logout</button>
     </div>
 
     <p>Aqui podes gerir a tua conta, ver encomendas, etc.</p>
-    <p style="margin-top: 40px; font-size: 0.9rem; opacity: 0.7;">Serás redirecionado para a página inicial em 7 segundos...</p>
+    <p style="margin-top: 40px; font-size: 0.9rem; opacity: 0.7;">
+      Serás redirecionado para a página inicial em 7 segundos...
+    </p>
   </main>
 
   <script>
@@ -128,8 +130,6 @@
     if (username) {
       usernameDisplay.textContent = username;
       welcomeMsg.textContent = `Bem-vindo, ${username}!`;
-      logoutBtn.style.display = 'inline-block';
-      cartIcon.style.display = 'inline-block';
 
       logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('username');
@@ -137,18 +137,18 @@
       });
 
       cartIcon.addEventListener('click', () => {
-        window.location.href = 'cart.html'; // Ajusta conforme o caminho do carrinho
+        window.location.href = 'cart.html'; // Ajusta se o caminho for diferente
       });
 
-      // Redirecionar para página inicial após 7 segundos
+      // Redireciona para a página principal após 7 segundos
       setTimeout(() => {
-        window.location.href = 'index.html'; // Ajusta para a página inicial real
+        window.location.href = 'index.html'; // Muda para a página inicial real
       }, 7000);
 
     } else {
+      // Se não estiver logado, manda para login
       window.location.href = 'login.html';
     }
   </script>
 </body>
 </html>
-
