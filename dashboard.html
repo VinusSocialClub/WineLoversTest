@@ -1,83 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dashboard - Vinus Social Club</title>
-  <style>
-    body, html {
-      margin: 0; padding: 0; height: 100%;
-      background-color: #2c7a4b;
-      font-family: Arial, sans-serif;
-      color: white;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dashboard - Vinus Social Club</title>
+<link href="favicon_final_blackbg.ico" rel="icon" type="image/x-icon" />
+<style>
+  /* Reset */
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0; padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #004225;
+    color: white;
+    height: 100%;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+  }
+
+  .logo {
+    height: 100px;
+    width: auto;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 140px); /* desconta header + padding */
+    padding: 20px;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .welcome {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+  }
+
+  #cartIcon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 30px;
+    cursor: pointer;
+  }
+
+  #usernameDisplay {
+    font-weight: bold;
+    margin-right: 20px;
+    font-size: 1rem;
+  }
+
+  #logoutBtn {
+    background-color: #f1c40f;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  #logoutBtn:hover {
+    background-color: #d4ac0d;
+  }
+
+  /* Container for user info + cart + logout */
+  .user-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 600px) {
+    main {
+      padding: 10px;
+      height: auto;
     }
-    .logo {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 120px;
-      user-select: none;
+    .user-controls {
+      flex-direction: column;
+      gap: 10px;
     }
-    .container {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 20px;
+    #usernameDisplay {
+      margin-right: 0;
     }
-    .dashboard-content {
-      background: rgba(255,255,255,0.1);
-      padding: 30px 40px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      max-width: 600px;
-      width: 100%;
-    }
-    h1 {
-      margin-bottom: 15px;
-    }
-    button.logout-btn {
-      background-color: #1f5c34;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: background-color 0.3s ease;
-    }
-    button.logout-btn:hover {
-      background-color: #144421;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <img src="logo.png" alt="Vinus Social Club Logo" class="logo" />
+  <header>
+    <img src="logo_transparent.png" alt="Vinus Social Club Logo" class="logo" />
+  </header>
 
-  <div class="container">
-    <div class="dashboard-content">
-      <h1>Bem-vindo(a), <span id="usernameDisplay"></span>!</h1>
-      <p>Este é o teu dashboard do Vinus Social Club.</p>
-      <button class="logout-btn" id="logoutBtn">Logout</button>
+  <main>
+    <h1>Dashboard</h1>
+    <div class="welcome" id="welcomeMsg">Bem-vindo!</div>
+
+    <div class="user-controls">
+      <div id="usernameDisplay"></div>
+      <img id="cartIcon" src="cart_icon.png" alt="Carrinho" title="Carrinho" style="display:none;" />
+      <button id="logoutBtn" style="display:none;">Logout</button>
     </div>
-  </div>
+
+    <!-- Conteúdo do dashboard aqui -->
+    <p>Aqui podes gerir a tua conta, ver encomendas, etc.</p>
+  </main>
 
   <script>
+    // Lê o username do localStorage
     const username = localStorage.getItem('username');
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const cartIcon = document.getElementById('cartIcon');
+    const welcomeMsg = document.getElementById('welcomeMsg');
 
-    if (!username) {
-      // Se não estiver logado, redireciona para login
-      window.location.href = 'login.html';
-    } else {
-      document.getElementById('usernameDisplay').textContent = username;
-    }
+    if (username) {
+      usernameDisplay.textContent = username;
+      welcomeMsg.textContent = `Bem-vindo, ${username}!`;
+      logoutBtn.style.display = 'inline-block';
+      cartIcon.style.display = 'inline-block';
 
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('username');
-      window.location.href = 'login.html';
-    });
-  </script>
-</body>
-</html>
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('username');
+        window.location.href = 'login.html';
+      });
+
+      cartIcon.addEventListener('click', () => {
+        window.
