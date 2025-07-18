@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
 const User = require('./models/user');
 const Cart = require('./models/cart');
@@ -16,7 +15,6 @@ require('dotenv').config();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Conexão MongoDB
 const mongoURI = process.env.MONGO_URI || 'mongodb+srv://vinussocialclub:<db_password>@wineloversdb.aulcl99.mongodb.net/?retryWrites=true&w=majority&appName=WineLoversDB';
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -29,34 +27,24 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
-  if (!username || !email || !password) {
-    return res.status(400).json({ message: 'Preencha todos os campos' });
-  }
-
   try {
-    // Verificar email ou username já usados
-    const existingUser = await User.findOne({
-      $or: [{ email }, { username }]
-    });
+    const existingEmail = await User.findOne({ email });
+    const existingUsername = await User.findOne({ username });
 
-    if (existingUser) {
-      if (existingUser.email === email) {
-        return res.status(400).json({ message: 'Email já está em uso' });
-      }
-      if (existingUser.username === username) {
-        return res.status(400).json({ message: 'Username já está em uso' });
-      }
+    if (existingEmail) {
+      return res.status(400).json({ message: 'Email já está em uso' });
     }
 
-    // Fazer hash da password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    if (existingUsername) {
+      return res.status(400).json({ message: 'Username já está em uso' });
+    }
 
-    const newUser = new User({ username, email, password: hashedPassword });
+    const newUser = new User({ username, email, password });
     await newUser.save();
 
-    res.status(201).json({ message: 'Utilizador registado com sucesso!' });
+    // Retorna id, username e email para o frontend
+    res.json({ message: 'Utilizador registado com sucesso!', user: { id: newUser._id, username, email } });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Erro no servidor', error: err.message });
   }
 });
@@ -65,49 +53,62 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password)
-    return res.status(400).json({ message: 'Por favor, insira email e password' });
-
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email, password });
 
-    if (!user)
-      return res.status(401).json({ message: 'Credenciais inválidas' });
-
-    // Comparar password com hash guardado
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch)
-      return res.status(401).json({ message: 'Credenciais inválidas' });
-
-    res.json({ message: 'Login efetuado com sucesso!', username: user.username });
+    if (user) {
+      // Retorna id, username e email para o frontend
+      res.json({ message: 'Login efetuado com sucesso!', user: { id: user._id, username: user.username, email } });
+    } else {
+      res.status(401).json({ message: 'Credenciais inválidas' });
+    }
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Erro no servidor', error: err.message });
   }
 });
-
-// As outras rotas (cart, checkout) mantém-se iguais
 
 // Adicionar item ao carrinho
 app.post('/cart', async (req, res) => {
-  const cartItem = req.body;
+  const { userId, items } = req.body;
+
+  if (!userId || !items || !Array.isArray(items)) {
+    return res.status(400).json({ message: 'Dados inválidos para o carrinho' });
+  }
 
   try {
-    const newCartItem = new Cart(cartItem);
-    await newCartItem.save();
+    // Procura se já existe carrinho para o user
+    let userCart = await Cart.findOne({ userId });
 
-    const allCartItems = await Cart.find();
-    res.json({ message: 'Item adicionado ao carrinho', cart: allCartItems });
+    if (!userCart) {
+      userCart = new Cart({ userId, items });
+    } else {
+      // Adicionar os items ao carrinho existente (exemplo simples)
+      items.forEach(newItem => {
+        const existingItem = userCart.items.find(item => item.productId === newItem.productId);
+        if (existingItem) {
+          existingItem.quantity += newItem.quantity;
+        } else {
+          userCart.items.push(newItem);
+        }
+      });
+    }
+
+    await userCart.save();
+
+    res.json({ message: 'Itens adicionados ao carrinho', cart: userCart });
   } catch (err) {
     res.status(500).json({ message: 'Erro no servidor', error: err.message });
   }
 });
 
-// Ver carrinho
-app.get('/cart', async (req, res) => {
+// Ver carrinho do utilizador
+app.get('/cart/:userId', async (req, res) => {
+  const { userId } = req.params;
+
   try {
-    const allCartItems = await Cart.find();
-    res.json(allCartItems);
+    const userCart = await Cart.findOne({ userId });
+    if (!userCart) return res.json({ items: [] });
+    res.json(userCart);
   } catch (err) {
     res.status(500).json({ message: 'Erro no servidor', error: err.message });
   }
@@ -115,18 +116,28 @@ app.get('/cart', async (req, res) => {
 
 // Checkout
 app.post('/checkout', async (req, res) => {
-  const { name, address } = req.body;
+  const { userId, address } = req.body;
 
-  if (!name || !address) {
+  if (!userId || !address) {
     return res.status(400).json({ message: 'Dados inválidos' });
   }
 
   try {
-    const cartItems = await Cart.find();
-    const newOrder = new Order({ name, address, items: cartItems });
+    const userCart = await Cart.findOne({ userId });
+    if (!userCart || userCart.items.length === 0) {
+      return res.status(400).json({ message: 'Carrinho vazio' });
+    }
+
+    const newOrder = new Order({
+      userId,
+      items: userCart.items,
+      address,
+    });
+
     await newOrder.save();
 
-    await Cart.deleteMany();
+    // Limpar carrinho após encomenda
+    await Cart.deleteOne({ userId });
 
     res.json({ message: 'Compra efetuada com sucesso!' });
   } catch (err) {
@@ -137,3 +148,4 @@ app.post('/checkout', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor a correr na porta ${PORT}`);
 });
+
