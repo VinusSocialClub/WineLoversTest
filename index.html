@@ -564,15 +564,25 @@
 </style>
 </head>
 <body>
-<header>
-<img alt="Logo" class="logo" src="logo_transparent.png" style="height: 150px; width: auto;"/>
-<nav>
-<a href="./index.html"><span data-i18n="header_home">Home</span></a>
-<a href="./shop/"><span data-i18n="header_shop">Shop</span></a>
-<a href="./videos/"><span data-i18n="header_videos">Videos</span></a>
-<a href="./articles/"><span data-i18n="header_articles">Articles</span></a>
-</nav>
-<select id="langSelect" style="margin-left: 20px; padding: 5px;"><option value="en">🇬🇧 EN</option><option value="pt">🇵🇹 PT</option><option value="fr">🇫🇷 FR</option><option value="de">🇩🇪 DE</option></select>
+<header style="position: relative;">
+  <img alt="Logo" class="logo" src="logo_transparent.png" style="height: 150px; width: auto;"/>
+  <nav>
+    <a href="./index.html"><span data-i18n="header_home">Home</span></a>
+    <a href="./shop/"><span data-i18n="header_shop">Shop</span></a>
+    <a href="./videos/"><span data-i18n="header_videos">Videos</span></a>
+    <a href="./articles/"><span data-i18n="header_articles">Articles</span></a>
+  </nav>
+  <select id="langSelect" style="margin-left: 20px; padding: 5px;">
+    <option value="en">🇬🇧 EN</option>
+    <option value="pt">🇵🇹 PT</option>
+    <option value="fr">🇫🇷 FR</option>
+    <option value="de">🇩🇪 DE</option>
+  </select>
+
+  <!-- Aqui adiciona esta div para o botão/login -->
+  <div id="loginArea" style="position: absolute; top: 20px; right: 20px;">
+    <button id="loginBtn">Login</button>
+  </div>
 </header>
 <section class="main-section">
 <div class="left">
