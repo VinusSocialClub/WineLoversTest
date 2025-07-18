@@ -27,17 +27,23 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Registo (guardar novo utilizador)
 app.post('/register', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, email, password } = req.body;
 
     try {
-      // Verifica se utilizador já existe
-      const existingUser = await User.findOne({ username });
-      if (existingUser) {
-        return res.status(400).json({ message: 'Utilizador já existe' });
+      const existingEmail = await User.findOne({ email });
+      const existingUsername = await User.findOne({ username });
+
+      if (existingEmail) {
+        return res.status(400).json({ message: 'Email já está em uso' });
       }
 
-      const newUser = new User({ username, password });
+      if (existingUsername) {
+        return res.status(400).json({ message: 'Username já está em uso' });
+      }
+
+      const newUser = new User({ username, email, password });
       await newUser.save();
+
       res.json({ message: 'Utilizador registado com sucesso!' });
     } catch (err) {
       res.status(500).json({ message: 'Erro no servidor', error: err.message });
@@ -46,12 +52,13 @@ app.post('/register', async (req, res) => {
 
 // Login
 app.post('/login', async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-      const user = await User.findOne({ username, password });
+      const user = await User.findOne({ email, password });
+
       if (user) {
-        res.json({ message: 'Login efetuado com sucesso!' });
+        res.json({ message: 'Login efetuado com sucesso!', username: user.username });
       } else {
         res.status(401).json({ message: 'Credenciais inválidas' });
       }
