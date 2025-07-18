@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const User = require('./models/user');
 const Cart = require('./models/cart');
@@ -10,7 +11,6 @@ const Order = require('./models/order');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Carregar variáveis de ambiente (se usares .env)
 require('dotenv').config();
 
 app.use(cors());
@@ -25,97 +25,115 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // --- Rotas ---
 
-// Registo (guardar novo utilizador)
+// Registo
 app.post('/register', async (req, res) => {
-    const { username, email, password } = req.body;
+  const { username, email, password } = req.body;
 
-    try {
-      const existingEmail = await User.findOne({ email });
-      const existingUsername = await User.findOne({ username });
+  if (!username || !email || !password) {
+    return res.status(400).json({ message: 'Preencha todos os campos' });
+  }
 
-      if (existingEmail) {
+  try {
+    // Verificar email ou username já usados
+    const existingUser = await User.findOne({
+      $or: [{ email }, { username }]
+    });
+
+    if (existingUser) {
+      if (existingUser.email === email) {
         return res.status(400).json({ message: 'Email já está em uso' });
       }
-
-      if (existingUsername) {
+      if (existingUser.username === username) {
         return res.status(400).json({ message: 'Username já está em uso' });
       }
-
-      const newUser = new User({ username, email, password });
-      await newUser.save();
-
-      res.json({ message: 'Utilizador registado com sucesso!' });
-    } catch (err) {
-      res.status(500).json({ message: 'Erro no servidor', error: err.message });
     }
+
+    // Fazer hash da password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({ username, email, password: hashedPassword });
+    await newUser.save();
+
+    res.status(201).json({ message: 'Utilizador registado com sucesso!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erro no servidor', error: err.message });
+  }
 });
 
 // Login
 app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    try {
-      const user = await User.findOne({ email, password });
+  if (!email || !password)
+    return res.status(400).json({ message: 'Por favor, insira email e password' });
 
-      if (user) {
-        res.json({ message: 'Login efetuado com sucesso!', username: user.username });
-      } else {
-        res.status(401).json({ message: 'Credenciais inválidas' });
-      }
-    } catch (err) {
-      res.status(500).json({ message: 'Erro no servidor', error: err.message });
-    }
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user)
+      return res.status(401).json({ message: 'Credenciais inválidas' });
+
+    // Comparar password com hash guardado
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch)
+      return res.status(401).json({ message: 'Credenciais inválidas' });
+
+    res.json({ message: 'Login efetuado com sucesso!', username: user.username });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erro no servidor', error: err.message });
+  }
 });
+
+// As outras rotas (cart, checkout) mantém-se iguais
 
 // Adicionar item ao carrinho
 app.post('/cart', async (req, res) => {
-    const cartItem = req.body;
+  const cartItem = req.body;
 
-    try {
-      const newCartItem = new Cart(cartItem);
-      await newCartItem.save();
+  try {
+    const newCartItem = new Cart(cartItem);
+    await newCartItem.save();
 
-      const allCartItems = await Cart.find();
-      res.json({ message: 'Item adicionado ao carrinho', cart: allCartItems });
-    } catch (err) {
-      res.status(500).json({ message: 'Erro no servidor', error: err.message });
-    }
+    const allCartItems = await Cart.find();
+    res.json({ message: 'Item adicionado ao carrinho', cart: allCartItems });
+  } catch (err) {
+    res.status(500).json({ message: 'Erro no servidor', error: err.message });
+  }
 });
 
 // Ver carrinho
 app.get('/cart', async (req, res) => {
-    try {
-      const allCartItems = await Cart.find();
-      res.json(allCartItems);
-    } catch (err) {
-      res.status(500).json({ message: 'Erro no servidor', error: err.message });
-    }
+  try {
+    const allCartItems = await Cart.find();
+    res.json(allCartItems);
+  } catch (err) {
+    res.status(500).json({ message: 'Erro no servidor', error: err.message });
+  }
 });
 
-// Checkout (finalizar compra)
+// Checkout
 app.post('/checkout', async (req, res) => {
-    const { name, address } = req.body;
+  const { name, address } = req.body;
 
-    if (!name || !address) {
-      return res.status(400).json({ message: 'Dados inválidos' });
-    }
+  if (!name || !address) {
+    return res.status(400).json({ message: 'Dados inválidos' });
+  }
 
-    try {
-      // Guardar order
-      const cartItems = await Cart.find();
-      const newOrder = new Order({ name, address, items: cartItems });
-      await newOrder.save();
+  try {
+    const cartItems = await Cart.find();
+    const newOrder = new Order({ name, address, items: cartItems });
+    await newOrder.save();
 
-      // Limpar carrinho
-      await Cart.deleteMany();
+    await Cart.deleteMany();
 
-      res.json({ message: 'Compra efetuada com sucesso!' });
-    } catch (err) {
-      res.status(500).json({ message: 'Erro no servidor', error: err.message });
-    }
+    res.json({ message: 'Compra efetuada com sucesso!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Erro no servidor', error: err.message });
+  }
 });
 
-// Iniciar servidor
 app.listen(PORT, () => {
-    console.log(`Servidor a correr na porta ${PORT}`);
+  console.log(`Servidor a correr na porta ${PORT}`);
 });
