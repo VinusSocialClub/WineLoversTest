@@ -16,21 +16,21 @@
   }
 
   header {
-    padding: 10px 20px;
+    padding: 20px 40px;           /* Igual ao login */
     background-color: #004225;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    height: 160px;
+    justify-content: space-between; /* Igual ao login */
+    height: auto;                 /* Remove altura fixa para igualar layout */
   }
 
   .logo {
-    height: 150px;
+    height: 150px;                /* Igual ao login */
     width: auto;
   }
 
   main {
-    height: calc(100vh - 160px);
+    height: calc(100vh - 190px); /* Ajustado para considerar o padding maior do header */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,6 +53,7 @@
 
 <header>
   <img src="logo_transparent.png" alt="Vinus Social Club Logo" class="logo" />
+  <div></div>  <!-- Mantém espaço para justificar o logo à esquerda como no login -->
 </header>
 
 <main>
